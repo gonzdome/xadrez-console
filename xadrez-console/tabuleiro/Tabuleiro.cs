@@ -12,4 +12,9 @@ public class Tabuleiro
         this.colunas = colunas;
         this.pecas = new Peca[linhas, colunas];
     }
+
+    public Peca peca (int linhas, int colunas)
+    {
+        return pecas[linhas, colunas];
+    }
 }
