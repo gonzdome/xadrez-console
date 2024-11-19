@@ -8,12 +8,21 @@ class Program
 {
     static void Main(string[] args)
     {
-        Board board = new Board(8, 8);
+        try
+        {
+            Board board = new Board(8, 8);
+            
+            board.placePiece(new Tower(board, Color.Black), new Position(0, 0));
+            board.placePiece(new Tower(board, Color.Black), new Position(0, 7));
+            board.placePiece(new Tower(board, Color.Black), new Position(7, 0));
+            board.placePiece(new Tower(board, Color.Black), new Position(7, 7));
+            board.placePiece(new Tower(board, Color.Black), new Position(7, 7));
 
-        board.PlacePiece(new Tower(board, Color.Black), new Position(0, 0));
-        board.PlacePiece(new Tower(board, Color.Black), new Position(0, 7));
-        board.PlacePiece(new King(board, Color.Black), new Position(0, 4));
-
-        Screen.printBoard(board);
+            Screen.printBoard(board);
+        }
+        catch (BoardException e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }

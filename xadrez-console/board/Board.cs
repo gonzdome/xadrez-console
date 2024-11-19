@@ -13,14 +13,35 @@ public class Board
         pieces = new Piece[rows, columns];
     }
 
-    public Piece piece (int rows, int columns)
+    public Piece piece(int rows, int columns)
     {
         return pieces[rows, columns];
     }
 
-    public void PlacePiece (Piece piece, Position position)
+    public Piece piece(Position position)
     {
+        return pieces[position.row, position.column];
+    }
+
+    public void placePiece(Piece piece, Position position)
+    {
+        if (!validPosition(position))
+            throw new BoardException($"Invalid position! Position: ({position})");
+
+        if (positionNotEmpty(position))
+            throw new BoardException($"Position not empty! Position: ({position})");
+
         pieces[position.row, position.column] = piece;
         piece.position = position;
+    }
+
+    public bool validPosition(Position position) 
+    {
+        return Enumerable.Range(0, rows).Contains(position.row) || Enumerable.Range(0, columns).Contains(position.column);
+    }
+
+    public bool positionNotEmpty(Position position)
+    {
+        return piece(position) != null;
     }
 }
