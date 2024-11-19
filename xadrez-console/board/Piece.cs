@@ -1,19 +1,17 @@
-﻿using board;
-
-namespace board;
+﻿namespace board;
 
 public class Piece
 {
-    public Position position { get; set; }
+    public Position? position { get; set; }
     public Color color { get; protected set; }
     public int moves { get; protected set; }
     public Board board {  get; protected set; }
 
-    public Piece(Position position, Color color, int moves, Board board)
+    public Piece(Board board, Color color)
     {
-        this.position = position;
+        this.position = null;
+        this.board = board;
         this.color = color;
         this.moves = 0;
-        this.board = board;
     }
 }
