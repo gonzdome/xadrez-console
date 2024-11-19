@@ -1,5 +1,5 @@
-﻿using tabuleiro;
-using tela;
+﻿using board;
+using screen;
 
 namespace xadrez_console;
 
@@ -7,8 +7,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Tabuleiro tabuleiro = new Tabuleiro(8, 8);
+        Board board = new Board(8, 8);
 
-        Tela.imprimirTabuleiro(tabuleiro);
+        Screen.printBoard(board);
     }
 }
