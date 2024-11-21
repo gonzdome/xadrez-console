@@ -1,4 +1,5 @@
 ﻿using board;
+using System.ComponentModel;
 using System.Runtime.Intrinsics.X86;
 
 namespace screen;
@@ -19,7 +20,7 @@ public class Screen
             Console.WriteLine();
         }
 
-        Console.Write("  A B C D E F G H");
+        Console.WriteLine("  A B C D E F G H");
     }
     public static void printPiece(Piece piece, ConsoleColor aux)
     {
@@ -31,5 +32,13 @@ public class Screen
         Console.ForegroundColor = piece?.color == Color.Yellow ? ConsoleColor.Yellow : aux;
         Console.Write($"{print} ");
         Console.ForegroundColor = aux;
+    }
+
+    public static BoardPosition readBoardPosition()
+    {
+        string s = Console.ReadLine();
+        char column = s[0];
+        int row = int.Parse($"{s[1]}");
+        return new BoardPosition(column.ToString(), row);
     }
 }
