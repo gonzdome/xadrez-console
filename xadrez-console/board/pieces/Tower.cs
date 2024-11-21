@@ -8,6 +8,6 @@ public class Tower : Piece
 
     public override string ToString()
     {
-        return "T ";
+        return "T";
     }
 }
