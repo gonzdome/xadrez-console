@@ -35,6 +35,18 @@ public class Board
         piece.position = position;
     }
 
+    public Piece removePiece(Position position) 
+    {
+        var piecePosition = piece(position);
+        if (piecePosition == null)
+            return null;
+
+        Piece aux = piecePosition;
+        aux.position = null;
+        pieces[position.row, position.column] = null;
+        return aux;
+    }
+
     public bool validPosition(Position position) 
     {
         return Enumerable.Range(0, rows).Contains(position.row) || Enumerable.Range(0, columns).Contains(position.column);

@@ -13,7 +13,7 @@ public class BoardPosition
 
     public Position toPosition()
     {
-        return new Position(8 - row, 'A' - char.Parse(column.ToUpper()));
+        return new Position(8 - row, char.Parse(column.ToUpper()) - 'A');
     }
 
     public override string ToString()

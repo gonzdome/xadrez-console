@@ -14,4 +14,9 @@ public class Piece
         this.color = color;
         this.moves = 0;
     }
+
+    public void addMoveQuantity()
+    {
+        moves++;
+    }
 }

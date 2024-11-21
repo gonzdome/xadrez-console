@@ -1,5 +1,5 @@
 ﻿using board;
-using board.pieces;
+using game;
 using screen;
 
 namespace xadrez_console;
@@ -10,15 +10,9 @@ class Program
     {
         try
         {
-            Board board = new Board(8, 8);
-            
-            board.placePiece(new Tower(board, Color.White), new Position(0, 0));
-            board.placePiece(new Tower(board, Color.White), new Position(0, 7));
-            board.placePiece(new Tower(board, Color.Yellow), new Position(7, 0));
-            board.placePiece(new Tower(board, Color.Yellow), new Position(7, 7));
+            Match newMatch = new ();          
+            Screen.printBoard(newMatch.board);
 
-            var boardPosition = new BoardPosition("a", board.rows);
-            Screen.printBoard(board);
         }
         catch (BoardException e)
         {
