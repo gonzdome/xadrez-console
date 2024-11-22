@@ -1,6 +1,6 @@
 ﻿namespace board;
 
-public class Piece
+abstract class Piece
 {
     public Position? position { get; set; }
     public Color color { get; protected set; }
@@ -19,4 +19,6 @@ public class Piece
     {
         moves++;
     }
+
+    public abstract bool[,] possibleMoves();
 }
