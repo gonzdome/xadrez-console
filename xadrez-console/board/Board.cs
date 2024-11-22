@@ -1,6 +1,6 @@
 ﻿namespace board;
 
-public class Board
+class Board
 {
     public int rows {  get; set; }
     public int columns { get; set; }
@@ -37,10 +37,10 @@ public class Board
 
     public Piece removePiece(Position position) 
     {
-        var piecePosition = piece(position);
-        if (piecePosition == null)
+        if (!positionNotEmpty(position))
             return null;
 
+        var piecePosition = piece(position);
         Piece aux = piecePosition;
         aux.position = null;
         pieces[position.row, position.column] = null;

@@ -3,7 +3,7 @@ using board.pieces;
 
 namespace game;
 
-public class Match
+class Match
 {
     public Board board { get; private set; }
     private int turn;
@@ -22,6 +22,9 @@ public class Match
     public void makeNewMove(Position origin, Position destiny)
     {
         Piece piece = board.removePiece(origin);
+        if (piece == null)
+            throw new BoardException("Piece not found!");
+
         piece.addMoveQuantity();
         Piece grabbedPiece = board.removePiece(destiny);
         board.placePiece(piece, destiny);
