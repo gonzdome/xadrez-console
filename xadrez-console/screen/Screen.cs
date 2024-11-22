@@ -4,7 +4,7 @@ using System.Runtime.Intrinsics.X86;
 
 namespace screen;
 
-public class Screen
+class Screen
 {
     public static void printBoard(Board board)
     {
