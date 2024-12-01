@@ -32,6 +32,7 @@ class Match
 
     private void placePieces()
     {
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("c", 4).toPosition());
+        board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 4).toPosition());
+        board.placePiece(new King(board, Color.White), new BoardPosition("E", 1).toPosition());
     }
 }

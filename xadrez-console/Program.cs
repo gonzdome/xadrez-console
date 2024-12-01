@@ -10,20 +10,25 @@ class Program
     {
         try
         {
-            Match newMatch = new ();          
+            Match match = new ();          
 
-            while(!newMatch.finished)
+            while(!match.finished)
             {
                 Console.Clear();
-                Screen.printBoard(newMatch.board);
+                Screen.printBoard(match.board);
 
                 Console.Write("Origin:");
                 var origin = Screen.readBoardPosition().toPosition();
 
+                // Show the possible path/steps for the piece
+                bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
+                Console.Clear();
+                Screen.printBoard(match.board, possiblePositions);
+
                 Console.Write("Destiny:");
                 var destiny = Screen.readBoardPosition().toPosition();
 
-                newMatch.makeNewMove(origin, destiny);
+                match.makeNewMove(origin, destiny);
             }
         }
         catch (BoardException e)

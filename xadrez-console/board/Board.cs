@@ -20,7 +20,8 @@ class Board
 
     public Piece piece(Position position)
     {
-        return pieces[position.row, position.column];
+        var a = pieces[position.row, position.column];
+        return a;
     }
 
     public void placePiece(Piece piece, Position position)
@@ -49,7 +50,10 @@ class Board
 
     public bool validPosition(Position position) 
     {
-        return Enumerable.Range(0, rows).Contains(position.row) || Enumerable.Range(0, columns).Contains(position.column);
+        if (position.row < 0 || position.row >= rows || position.column < 0 || position.column >= columns)
+            return false;
+
+        return true;
     }
 
     public bool positionNotEmpty(Position position)
