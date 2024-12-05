@@ -16,6 +16,9 @@ class Program
             {
                 Console.Clear();
                 Screen.printBoard(match.board);
+                Console.WriteLine();
+                Console.WriteLine($"Turn: {match.turn}");
+                Console.WriteLine($"Waiting for next player: {match.actualPlayer}");
 
                 Console.Write("Origin:");
                 var origin = Screen.readBoardPosition().toPosition();
@@ -28,7 +31,7 @@ class Program
                 Console.Write("Destiny:");
                 var destiny = Screen.readBoardPosition().toPosition();
 
-                match.makeNewMove(origin, destiny);
+                match.executePlay(origin, destiny);
             }
         }
         catch (BoardException e)

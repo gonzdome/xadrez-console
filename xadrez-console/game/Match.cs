@@ -6,9 +6,9 @@ namespace game;
 class Match
 {
     public Board board { get; private set; }
-    private int turn;
-    private Color actualPlayer;
-    public bool finished;
+    public int turn { get; private set; }
+    public Color actualPlayer { get; private set; }
+    public bool finished { get; private set; }
 
     public Match()
     {
@@ -28,6 +28,21 @@ class Match
         piece.addMoveQuantity();
         Piece grabbedPiece = board.removePiece(destiny);
         board.placePiece(piece, destiny);
+    }
+
+    private void changePlayer()
+    {
+        if (actualPlayer == Color.White)
+            actualPlayer = Color.Yellow;
+        else
+            actualPlayer = Color.White;
+    }
+
+    public void executePlay(Position origin, Position destiny)
+    {
+        makeNewMove(origin, destiny);
+        turn++;
+        changePlayer();
     }
 
     private void placePieces()
