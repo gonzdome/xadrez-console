@@ -57,6 +57,12 @@ class Match
             throw new BoardException("There is no possible moves to the chosen origin piece!");
     }
 
+    public void validateDestinyPosition(Position origin, Position destiny)
+    {
+        if (!board.piece(origin).canMoveTo(destiny))
+            throw new BoardException("Invalid destiny position!");
+    }
+
     private void placePieces()
     {
         board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 1).toPosition());

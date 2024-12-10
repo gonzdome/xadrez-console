@@ -34,5 +34,10 @@ abstract class Piece
         return false;
     }
 
+    public bool canMoveTo(Position position)
+    {
+        return possibleMoves()[position.row, position.column];
+    }
+
     public abstract bool[,] possibleMoves();
 }
