@@ -20,5 +20,19 @@ abstract class Piece
         moves++;
     }
 
+    public bool hasPossibleMoves()
+    {
+        bool[,] mat = possibleMoves();
+        for (int i = 0; i < board.rows; i++)
+        {
+            for (int j = 0; j < board.columns; j++)
+            {
+                if(mat[i, j])
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public abstract bool[,] possibleMoves();
 }

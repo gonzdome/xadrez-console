@@ -45,9 +45,32 @@ class Match
         changePlayer();
     }
 
+    public void validateOriginPosition(Position position)
+    {
+        if (board.piece(position) == null)
+            throw new BoardException("There is no piece in the chosen origin!");
+
+        if (actualPlayer != board.piece(position).color)
+            throw new BoardException("The chosen origin piece is not yours!");
+
+        if (!board.piece(position).hasPossibleMoves())
+            throw new BoardException("There is no possible moves to the chosen origin piece!");
+    }
+
     private void placePieces()
     {
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 4).toPosition());
-        board.placePiece(new King(board, Color.White), new BoardPosition("E", 1).toPosition());
+        board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 1).toPosition());
+        board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 2).toPosition());
+        board.placePiece(new Tower(board, Color.White), new BoardPosition("D", 2).toPosition());
+        board.placePiece(new Tower(board, Color.White), new BoardPosition("E", 2).toPosition());
+        board.placePiece(new Tower(board, Color.White), new BoardPosition("E", 1).toPosition());
+        board.placePiece(new King(board, Color.White), new BoardPosition("D", 1).toPosition());
+
+        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("C", 8).toPosition());
+        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("C", 7).toPosition());
+        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("D", 7).toPosition());
+        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("E", 7).toPosition());
+        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("E", 8).toPosition());
+        board.placePiece(new King(board, Color.Yellow), new BoardPosition("D", 8).toPosition());
     }
 }

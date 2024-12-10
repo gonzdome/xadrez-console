@@ -8,7 +8,7 @@ class King : Piece
 
     public override string ToString()
     {
-        return "R";
+        return "K";
     }
 
     private bool possibleMove(Position position)
