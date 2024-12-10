@@ -1,6 +1,6 @@
 ﻿using board;
 using board.pieces;
-
+using System.Collections.Generic;
 namespace game;
 
 class Match
@@ -9,6 +9,8 @@ class Match
     public int turn { get; private set; }
     public Color actualPlayer { get; private set; }
     public bool finished { get; private set; }
+    private HashSet<Piece> pieces;
+    private HashSet<Piece> capturedPieces;
 
     public Match()
     {
@@ -16,6 +18,8 @@ class Match
         turn = 1;
         actualPlayer = Color.White;
         finished = false;
+        pieces = new HashSet<Piece>();
+        capturedPieces = new HashSet<Piece>();
         placePieces();
     }
 
@@ -26,8 +30,10 @@ class Match
             throw new BoardException("Piece not found!");
 
         piece.addMoveQuantity();
-        Piece grabbedPiece = board.removePiece(destiny);
+        Piece capturedPiece = board.removePiece(destiny);
         board.placePiece(piece, destiny);
+        if (capturedPiece != null)
+            capturedPieces.Add(capturedPiece);
     }
 
     private void changePlayer()
@@ -63,20 +69,51 @@ class Match
             throw new BoardException("Invalid destiny position!");
     }
 
+    public HashSet<Piece> checkCapturedPieces(Color color)
+    {
+        HashSet<Piece> aux = new HashSet<Piece>();
+        foreach (Piece x in capturedPieces)
+        {
+            if (x.color == color)
+                aux.Add(x);
+        }
+
+        return aux;
+    }
+
+    public HashSet<Piece> pieceInGame(Color color)
+    {
+        HashSet<Piece> aux = new HashSet<Piece>();
+        foreach (Piece x in pieces)
+        {
+            if (x.color == color)
+                aux.Add(x);
+        }
+
+        aux.ExceptWith(checkCapturedPieces(color));
+        return aux;
+    }
+
+    public void placeNewPiece(string column, int row, Piece piece)
+    {
+        board.placePiece(piece, new BoardPosition(column, row).toPosition());
+        pieces.Add(piece);
+    }
+
     private void placePieces()
     {
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 1).toPosition());
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("C", 2).toPosition());
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("D", 2).toPosition());
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("E", 2).toPosition());
-        board.placePiece(new Tower(board, Color.White), new BoardPosition("E", 1).toPosition());
-        board.placePiece(new King(board, Color.White), new BoardPosition("D", 1).toPosition());
+        placeNewPiece("C", 1, new Tower(board, Color.White));
+        placeNewPiece("C", 2, new Tower(board, Color.White));
+        placeNewPiece("D", 2, new Tower(board, Color.White));
+        placeNewPiece("E", 2, new Tower(board, Color.White));
+        placeNewPiece("E", 1, new Tower(board, Color.White));
+        placeNewPiece("D", 1, new King(board, Color.White));
 
-        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("C", 8).toPosition());
-        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("C", 7).toPosition());
-        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("D", 7).toPosition());
-        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("E", 7).toPosition());
-        board.placePiece(new Tower(board, Color.Yellow), new BoardPosition("E", 8).toPosition());
-        board.placePiece(new King(board, Color.Yellow), new BoardPosition("D", 8).toPosition());
+        placeNewPiece("C", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("C", 7, new Tower(board, Color.Yellow));
+        placeNewPiece("D", 7, new Tower(board, Color.Yellow));
+        placeNewPiece("E", 7, new Tower(board, Color.Yellow));
+        placeNewPiece("E", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("D", 8, new King(board, Color.Yellow));
     }
 }

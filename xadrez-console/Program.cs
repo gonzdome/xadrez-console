@@ -17,10 +17,7 @@ class Program
                 try
                 {
                     Console.Clear();
-                    Screen.printBoard(match.board);
-                    Console.WriteLine();
-                    Console.WriteLine($"Turn: {match.turn}");
-                    Console.WriteLine($"Waiting for next player: {match.actualPlayer}");
+                    Screen.printMatch(match);
 
                     Console.Write("Origin: ");
                     var origin = Screen.readBoardPosition().toPosition();

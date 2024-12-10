@@ -1,11 +1,44 @@
 ﻿using board;
-using System.ComponentModel;
-using System.Runtime.Intrinsics.X86;
+using game;
+using System.Collections.Generic;
 
 namespace screen;
 
 class Screen
 {
+    public static void printMatch(Match match) 
+    {
+        Screen.printBoard(match.board);
+        Console.WriteLine();
+        printCapturedPieces(match);
+        Console.WriteLine();
+        Console.WriteLine($"Turn: {match.turn}");
+        Console.WriteLine($"Waiting for next player: {match.actualPlayer}");
+        Console.WriteLine();
+    }
+
+    public static void printCapturedPieces(Match match)
+    {
+        Console.WriteLine("Captured pieces: ");
+        Console.Write("White: ");
+        printGroup(match.checkCapturedPieces(Color.White));
+        Console.WriteLine();
+        Console.Write("Yellow: ");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        printGroup(match.checkCapturedPieces(Color.Yellow));
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine();
+    }
+
+    public static void printGroup(HashSet<Piece> group)
+    {
+        Console.Write("[");
+        foreach (Piece x in group)
+            Console.Write($"{x}, ");
+
+        Console.Write("]");
+    }
+
     public static void printBoard(Board board)
     {
         ConsoleColor aux = Console.ForegroundColor;
