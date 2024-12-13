@@ -20,6 +20,11 @@ abstract class Piece
         moves++;
     }
 
+    public void removeMoveQuantity()
+    {
+        moves--;
+    }
+
     public bool hasPossibleMoves()
     {
         bool[,] mat = possibleMoves();

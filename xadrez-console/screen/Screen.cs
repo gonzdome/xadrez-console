@@ -15,6 +15,9 @@ class Screen
         Console.WriteLine($"Turn: {match.turn}");
         Console.WriteLine($"Waiting for next player: {match.actualPlayer}");
         Console.WriteLine();
+        if (match.check)
+            Console.WriteLine("Check!");
+        Console.WriteLine();
     }
 
     public static void printCapturedPieces(Match match)
@@ -28,7 +31,7 @@ class Screen
         printGroup(match.checkCapturedPieces(Color.Yellow));
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine();
-    }
+        }
 
     public static void printGroup(HashSet<Piece> group)
     {
@@ -105,6 +108,9 @@ class Screen
     public static BoardPosition readBoardPosition()
     {
         string s = Console.ReadLine();
+        if (s.Length > 2) 
+            throw new BoardException("Invalid piece!");
+
         char column = s[0];
         int row = int.Parse($"{s[1]}");
         return new BoardPosition(column.ToString(), row);

@@ -11,7 +11,7 @@ class Match
     public bool finished { get; private set; }
     private HashSet<Piece> pieces;
     private HashSet<Piece> capturedPieces;
-
+    public bool check { get; private set; }
     public Match()
     {
         board = new Board(8, 8);
@@ -20,10 +20,11 @@ class Match
         finished = false;
         pieces = new HashSet<Piece>();
         capturedPieces = new HashSet<Piece>();
+        check = false;
         placePieces();
     }
 
-    public void makeNewMove(Position origin, Position destiny)
+    public Piece makeNewMove(Position origin, Position destiny)
     {
         Piece piece = board.removePiece(origin);
         if (piece == null)
@@ -34,6 +35,8 @@ class Match
         board.placePiece(piece, destiny);
         if (capturedPiece != null)
             capturedPieces.Add(capturedPiece);
+        
+        return capturedPiece;
     }
 
     private void changePlayer()
@@ -46,9 +49,33 @@ class Match
 
     public void executePlay(Position origin, Position destiny)
     {
-        makeNewMove(origin, destiny);
+        var capturedPiece = makeNewMove(origin, destiny);
+        if (isCheck(actualPlayer))
+        {
+            undoPlay(origin, destiny, capturedPiece);
+            throw new BoardException("You're in check!");
+        }
+
+        if (isCheck(enemy(actualPlayer)))
+            check = true;
+        else 
+            check = false;
+
         turn++;
         changePlayer();
+    }
+
+    public void undoPlay (Position origin, Position destiny, Piece capturedPiece)
+    {
+        Piece piece = board.removePiece(destiny);
+        piece.removeMoveQuantity();
+        if (capturedPiece != null)
+        {
+            board.placePiece(capturedPiece, destiny);
+            capturedPieces.Remove(capturedPiece);
+        }
+
+        board.placePiece(piece, origin);
     }
 
     public void validateOriginPosition(Position position)
@@ -92,6 +119,39 @@ class Match
 
         aux.ExceptWith(checkCapturedPieces(color));
         return aux;
+    }
+
+    private Color enemy (Color color)
+    {
+        if (color == Color.White)
+            return Color.Yellow;
+        else
+            return Color.White;
+    }
+
+    private Piece king (Color color)
+    {
+        foreach (Piece piece in pieceInGame(color))
+        {
+            if (piece is King)
+                return piece;
+        }
+        return null;
+    }
+
+    public bool isCheck(Color color)
+    {
+        Piece kingPiece = king(color);
+        if (kingPiece == null)
+            throw new BoardException($"There is no {color} king!");
+
+        foreach (Piece piece in pieceInGame(enemy(color)))
+        {
+            bool[,] possibleMoves = piece.possibleMoves();
+            if (possibleMoves[kingPiece.position.row, kingPiece.position.column])
+                return true;
+        }
+        return false;
     }
 
     public void placeNewPiece(string column, int row, Piece piece)
