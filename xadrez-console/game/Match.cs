@@ -99,7 +99,7 @@ class Match
 
     public void validateDestinyPosition(Position origin, Position destiny)
     {
-        if (!board.piece(origin).canMoveTo(destiny))
+        if (!board.piece(origin).possibleMove(destiny))
             throw new BoardException("Invalid destiny position!");
     }
 
