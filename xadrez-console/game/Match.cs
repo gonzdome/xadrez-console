@@ -61,8 +61,15 @@ class Match
         else 
             check = false;
 
-        turn++;
-        changePlayer();
+        if (isCheckMate(enemy(actualPlayer)))
+        {
+            finished = true;
+        }
+        else
+        {
+            turn++;
+            changePlayer();
+        }
     }
 
     public void undoPlay (Position origin, Position destiny, Piece capturedPiece)
@@ -108,7 +115,7 @@ class Match
         return aux;
     }
 
-    public HashSet<Piece> pieceInGame(Color color)
+    public HashSet<Piece> piecesInGame(Color color)
     {
         HashSet<Piece> aux = new HashSet<Piece>();
         foreach (Piece x in pieces)
@@ -131,7 +138,7 @@ class Match
 
     private Piece king (Color color)
     {
-        foreach (Piece piece in pieceInGame(color))
+        foreach (Piece piece in piecesInGame(color))
         {
             if (piece is King)
                 return piece;
@@ -145,13 +152,42 @@ class Match
         if (kingPiece == null)
             throw new BoardException($"There is no {color} king!");
 
-        foreach (Piece piece in pieceInGame(enemy(color)))
+        foreach (Piece piece in piecesInGame(enemy(color)))
         {
             bool[,] possibleMoves = piece.possibleMoves();
             if (possibleMoves[kingPiece.position.row, kingPiece.position.column])
                 return true;
         }
         return false;
+    }
+
+    public bool isCheckMate(Color color)
+    {
+        if (!isCheck(color))
+            return false;
+
+        foreach(Piece piece in piecesInGame(color))
+        {
+            bool[,] mat = piece.possibleMoves();
+            for(int i = 0; i < board.rows; i++)
+            {
+                for (int j = 0; j < board.columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        Position origin = piece.position;
+                        Position destiny = new Position(i, j);
+                        Piece capturedPiece = makeNewMove(origin, destiny);
+                        bool testCheck = isCheck(color);
+                        undoPlay(origin, destiny, capturedPiece);
+                        if (!testCheck)
+                            return false;
+                    }
+                }
+            }
+        }
+        
+        return true;
     }
 
     public void placeNewPiece(string column, int row, Piece piece)
@@ -162,7 +198,7 @@ class Match
 
     private void placePieces()
     {
-        placeNewPiece("C", 1, new Tower(board, Color.White));
+        placeNewPiece("B", 1, new Tower(board, Color.White));
         placeNewPiece("C", 2, new Tower(board, Color.White));
         placeNewPiece("D", 2, new Tower(board, Color.White));
         placeNewPiece("E", 2, new Tower(board, Color.White));
@@ -170,10 +206,10 @@ class Match
         placeNewPiece("D", 1, new King(board, Color.White));
 
         placeNewPiece("C", 8, new Tower(board, Color.Yellow));
-        placeNewPiece("C", 7, new Tower(board, Color.Yellow));
-        placeNewPiece("D", 7, new Tower(board, Color.Yellow));
-        placeNewPiece("E", 7, new Tower(board, Color.Yellow));
-        placeNewPiece("E", 8, new Tower(board, Color.Yellow));
-        placeNewPiece("D", 8, new King(board, Color.Yellow));
+        //placeNewPiece("C", 7, new Tower(board, Color.Yellow));
+        //placeNewPiece("D", 7, new Tower(board, Color.Yellow));
+        //placeNewPiece("E", 7, new Tower(board, Color.Yellow));
+        //placeNewPiece("E", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("A", 8, new King(board, Color.Yellow));
     }
 }

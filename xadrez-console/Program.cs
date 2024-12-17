@@ -23,7 +23,6 @@ class Program
                     var origin = Screen.readBoardPosition().toPosition();
                     match.validateOriginPosition(origin);
 
-                    // Show the possible path/steps for the piece
                     bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
                     Console.Clear();
                     Screen.printBoard(match.board, possiblePositions);
@@ -40,6 +39,9 @@ class Program
                     Console.ReadLine();
                 }
             }
+
+            Console.Clear();
+            Screen.printMatch(match);
         }
         catch (BoardException e)
         {

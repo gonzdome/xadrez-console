@@ -13,11 +13,19 @@ class Screen
         printCapturedPieces(match);
         Console.WriteLine();
         Console.WriteLine($"Turn: {match.turn}");
-        Console.WriteLine($"Waiting for next player: {match.actualPlayer}");
-        Console.WriteLine();
-        if (match.check)
-            Console.WriteLine("Check!");
-        Console.WriteLine();
+        if (match.finished)
+        {
+            Console.WriteLine("Checkmate!");
+            Console.WriteLine($"Winner: {match.actualPlayer}!");
+        }
+        else
+        {
+            Console.WriteLine($"Waiting for next player: {match.actualPlayer}");
+            Console.WriteLine();
+            if (match.check)
+                Console.WriteLine("Check!");
+            Console.WriteLine();
+        }
     }
 
     public static void printCapturedPieces(Match match)
