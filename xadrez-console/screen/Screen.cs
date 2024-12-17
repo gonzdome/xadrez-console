@@ -6,7 +6,7 @@ namespace screen;
 
 class Screen
 {
-    public static void printMatch(Match match) 
+    public static void printMatch(Match match)
     {
         Screen.printBoard(match.board);
         Console.WriteLine();
@@ -39,7 +39,7 @@ class Screen
         printGroup(match.checkCapturedPieces(Color.Yellow));
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine();
-        }
+    }
 
     public static void printGroup(HashSet<Piece> group)
     {
@@ -58,9 +58,9 @@ class Screen
         {
             Console.Write(8 - i + " ");
 
-            for (int j = 0; j < board.columns; j++) 
+            for (int j = 0; j < board.columns; j++)
 
-               printPiece(board.piece(i, j), aux);
+                printPiece(board.piece(i, j), aux);
 
             Console.WriteLine();
         }
@@ -89,7 +89,7 @@ class Screen
                 {
                     Console.BackgroundColor = originalBackground;
                 }
-                
+
                 printPiece(board.piece(i, j), aux);
                 Console.BackgroundColor = originalBackground;
             }
@@ -116,7 +116,7 @@ class Screen
     public static BoardPosition readBoardPosition()
     {
         string s = Console.ReadLine();
-        if (s.Length > 2) 
+        if (s.Length > 2 || s.Length == 0) 
             throw new BoardException("Invalid piece!");
 
         char column = s[0];

@@ -198,18 +198,38 @@ class Match
 
     private void placePieces()
     {
-        placeNewPiece("B", 1, new Tower(board, Color.White));
-        placeNewPiece("C", 2, new Tower(board, Color.White));
-        placeNewPiece("D", 2, new Tower(board, Color.White));
-        placeNewPiece("E", 2, new Tower(board, Color.White));
-        placeNewPiece("E", 1, new Tower(board, Color.White));
+        placeNewPiece("A", 1, new Tower(board, Color.White));
+        placeNewPiece("B", 1, new Horse(board, Color.White));
+        placeNewPiece("C", 1, new Bishop(board, Color.White));
         placeNewPiece("D", 1, new King(board, Color.White));
+        placeNewPiece("E", 1, new Queen(board, Color.White));
+        placeNewPiece("F", 1, new Bishop(board, Color.White));
+        placeNewPiece("G", 1, new Horse(board, Color.White));
+        placeNewPiece("H", 1, new Tower(board, Color.White));
+        placeNewPiece("A", 2, new Pawn(board, Color.White));
+        placeNewPiece("B", 2, new Pawn(board, Color.White));
+        placeNewPiece("C", 2, new Pawn(board, Color.White));
+        placeNewPiece("D", 2, new Pawn(board, Color.White));
+        placeNewPiece("E", 2, new Pawn(board, Color.White));
+        placeNewPiece("F", 2, new Pawn(board, Color.White));
+        placeNewPiece("G", 2, new Pawn(board, Color.White));
+        placeNewPiece("H", 2, new Pawn(board, Color.White));
 
-        placeNewPiece("C", 8, new Tower(board, Color.Yellow));
-        //placeNewPiece("C", 7, new Tower(board, Color.Yellow));
-        //placeNewPiece("D", 7, new Tower(board, Color.Yellow));
-        //placeNewPiece("E", 7, new Tower(board, Color.Yellow));
-        //placeNewPiece("E", 8, new Tower(board, Color.Yellow));
-        placeNewPiece("A", 8, new King(board, Color.Yellow));
+        placeNewPiece("A", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("B", 8, new Horse(board, Color.Yellow));
+        placeNewPiece("C", 8, new Bishop(board, Color.Yellow));
+        placeNewPiece("D", 8, new Queen(board, Color.Yellow));
+        placeNewPiece("E", 8, new King(board, Color.Yellow));
+        placeNewPiece("F", 8, new Bishop(board, Color.Yellow));
+        placeNewPiece("G", 8, new Horse(board, Color.Yellow));
+        placeNewPiece("H", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("A", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("B", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("C", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("D", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("E", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("F", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("G", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("H", 7, new Pawn(board, Color.Yellow));
     }
 }
