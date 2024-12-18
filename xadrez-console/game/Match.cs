@@ -1,6 +1,7 @@
 ﻿using board;
 using board.pieces;
 using System.Collections.Generic;
+
 namespace game;
 
 class Match
@@ -35,8 +36,59 @@ class Match
         board.placePiece(piece, destiny);
         if (capturedPiece != null)
             capturedPieces.Add(capturedPiece);
-        
+
+        // Castle
+        if (piece is King && destiny.column == origin.column + 2)
+        {
+            Position originR = new Position(origin.row, origin.column + 3);
+            Position destinyR = new Position(origin.row, origin.column + 1);
+            Piece rook = board.removePiece(originR);
+            rook.addMoveQuantity();
+            board.placePiece(rook, destinyR);
+        }
+
+        if (piece is King && destiny.column == origin.column - 2)
+        {
+            Position originR = new Position(origin.row, origin.column - 4);
+            Position destinyR = new Position(origin.row, origin.column - 1);
+            Piece rook = board.removePiece(originR);
+            rook.addMoveQuantity();
+            board.placePiece(rook, destinyR);
+        }
+
         return capturedPiece;
+    }
+    
+    public void undoPlay (Position origin, Position destiny, Piece capturedPiece)
+    {
+        Piece piece = board.removePiece(destiny);
+        piece.removeMoveQuantity();
+        if (capturedPiece != null)
+        {
+            board.placePiece(capturedPiece, destiny);
+            capturedPieces.Remove(capturedPiece);
+        }
+
+        // Castle
+        if (piece is King && destiny.column == origin.column + 2)
+        {
+            Position originR = new Position(origin.row, origin.column + 3);
+            Position destinyR = new Position(origin.row, origin.column + 1);
+            Piece rook = board.removePiece(destinyR);
+            rook.addMoveQuantity();
+            board.placePiece(rook, originR);
+        }
+
+        if (piece is King && destiny.column == origin.column - 2)
+        {
+            Position originR = new Position(origin.row, origin.column - 4);
+            Position destinyR = new Position(origin.row, origin.column - 1);
+            Piece rook = board.removePiece(destinyR);
+            rook.addMoveQuantity();
+            board.placePiece(rook, originR);
+        }
+
+        board.placePiece(piece, origin);
     }
 
     private void changePlayer()
@@ -56,12 +108,14 @@ class Match
             throw new BoardException("You're in check!");
         }
 
-        if (isCheck(enemy(actualPlayer)))
+        var getEnemy = enemy(actualPlayer);
+
+        if (isCheck(getEnemy))
             check = true;
         else 
             check = false;
 
-        if (isCheckMate(enemy(actualPlayer)))
+        if (isCheckMate(getEnemy))
         {
             finished = true;
         }
@@ -72,18 +126,6 @@ class Match
         }
     }
 
-    public void undoPlay (Position origin, Position destiny, Piece capturedPiece)
-    {
-        Piece piece = board.removePiece(destiny);
-        piece.removeMoveQuantity();
-        if (capturedPiece != null)
-        {
-            board.placePiece(capturedPiece, destiny);
-            capturedPieces.Remove(capturedPiece);
-        }
-
-        board.placePiece(piece, origin);
-    }
 
     public void validateOriginPosition(Position position)
     {
@@ -198,14 +240,14 @@ class Match
 
     private void placePieces()
     {
-        placeNewPiece("A", 1, new Tower(board, Color.White));
+        placeNewPiece("A", 1, new Rook(board, Color.White));
         placeNewPiece("B", 1, new Horse(board, Color.White));
         placeNewPiece("C", 1, new Bishop(board, Color.White));
-        placeNewPiece("D", 1, new King(board, Color.White));
+        placeNewPiece("D", 1, new King(board, Color.White, this));
         placeNewPiece("E", 1, new Queen(board, Color.White));
         placeNewPiece("F", 1, new Bishop(board, Color.White));
         placeNewPiece("G", 1, new Horse(board, Color.White));
-        placeNewPiece("H", 1, new Tower(board, Color.White));
+        placeNewPiece("H", 1, new Rook(board, Color.White));
         placeNewPiece("A", 2, new Pawn(board, Color.White));
         placeNewPiece("B", 2, new Pawn(board, Color.White));
         placeNewPiece("C", 2, new Pawn(board, Color.White));
@@ -215,14 +257,14 @@ class Match
         placeNewPiece("G", 2, new Pawn(board, Color.White));
         placeNewPiece("H", 2, new Pawn(board, Color.White));
 
-        placeNewPiece("A", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("A", 8, new Rook(board, Color.Yellow));
         placeNewPiece("B", 8, new Horse(board, Color.Yellow));
         placeNewPiece("C", 8, new Bishop(board, Color.Yellow));
         placeNewPiece("D", 8, new Queen(board, Color.Yellow));
-        placeNewPiece("E", 8, new King(board, Color.Yellow));
+        placeNewPiece("E", 8, new King(board, Color.Yellow, this));
         placeNewPiece("F", 8, new Bishop(board, Color.Yellow));
         placeNewPiece("G", 8, new Horse(board, Color.Yellow));
-        placeNewPiece("H", 8, new Tower(board, Color.Yellow));
+        placeNewPiece("H", 8, new Rook(board, Color.Yellow));
         placeNewPiece("A", 7, new Pawn(board, Color.Yellow));
         placeNewPiece("B", 7, new Pawn(board, Color.Yellow));
         placeNewPiece("C", 7, new Pawn(board, Color.Yellow));
