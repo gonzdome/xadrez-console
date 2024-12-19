@@ -13,7 +13,7 @@ class Bishop : Piece
     private bool possibleMove(Position position)
     {
         Piece piece = board.piece(position);
-        return piece == null || piece.color != this.color;
+        return piece == null || piece.color != color;
     }
 
     public override bool[,] possibleMoves()
@@ -30,7 +30,7 @@ class Bishop : Piece
             if(board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row - 1, position.column -1);
+            newPosition.defineValues(newPosition.row - 1, newPosition.column -1);
         }
 
         // NE
@@ -41,7 +41,7 @@ class Bishop : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row + 1, position.column + 1);
+            newPosition.defineValues(newPosition.row + 1, newPosition.column + 1);
         }
 
         // SE
@@ -52,7 +52,7 @@ class Bishop : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row + 1, position.column - 1);
+            newPosition.defineValues(newPosition.row + 1, newPosition.column - 1);
         }
 
         // SO
@@ -63,7 +63,7 @@ class Bishop : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row - 1, position.column + 1);
+            newPosition.defineValues(newPosition.row - 1, newPosition.column + 1);
         }
 
         return boolMat;

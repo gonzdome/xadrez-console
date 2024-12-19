@@ -194,9 +194,9 @@ class Match
         if (kingPiece == null)
             throw new BoardException($"There is no {color} king!");
 
-        foreach (Piece piece in piecesInGame(enemy(color)))
+        foreach (Piece p in piecesInGame(enemy(color)))
         {
-            bool[,] possibleMoves = piece.possibleMoves();
+            bool[,] possibleMoves = p.possibleMoves();
             if (possibleMoves[kingPiece.position.row, kingPiece.position.column])
                 return true;
         }
