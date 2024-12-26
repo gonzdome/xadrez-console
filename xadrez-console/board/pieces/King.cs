@@ -98,17 +98,17 @@ class King : Piece
                 Position position1 = new Position(position.row, position.column + 1);
                 Position position2 = new Position(position.row, position.column + 2);
                 if(board.piece(position1) == null && board.piece(position2) == null)
-                    boolMat [position.row, position.column] = true;
+                    boolMat[position.row, position.column + 2] = true;
             }
 
             Position towerPosition2 = new Position(position.row, position.column - 4);
-            if (canCastle(towerPosition))
+            if (canCastle(towerPosition2))
             {
                 Position position1 = new Position(position.row, position.column - 1);
                 Position position2 = new Position(position.row, position.column - 2);
                 Position position3 = new Position(position.row, position.column - 3);
                 if (board.piece(position1) == null && board.piece(position2) == null && board.piece(position3) == null)
-                    boolMat[position.row, position.column] = true;
+                    boolMat[position.row, position.column - 2] = true;
             }
         }
 

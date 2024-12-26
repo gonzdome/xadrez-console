@@ -20,8 +20,7 @@ class Board
 
     public Piece piece(Position position)
     {
-        var a = pieces[position.row, position.column];
-        return a;
+        return pieces[position.row, position.column];
     }
 
     public void placePiece(Piece piece, Position position)

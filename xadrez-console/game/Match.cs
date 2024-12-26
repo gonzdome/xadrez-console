@@ -243,8 +243,8 @@ class Match
         placeNewPiece("A", 1, new Rook(board, Color.White));
         placeNewPiece("B", 1, new Horse(board, Color.White));
         placeNewPiece("C", 1, new Bishop(board, Color.White));
-        placeNewPiece("D", 1, new King(board, Color.White, this));
-        placeNewPiece("E", 1, new Queen(board, Color.White));
+        placeNewPiece("D", 1, new Queen(board, Color.White));
+        placeNewPiece("E", 1, new King(board, Color.White, this));
         placeNewPiece("F", 1, new Bishop(board, Color.White));
         placeNewPiece("G", 1, new Horse(board, Color.White));
         placeNewPiece("H", 1, new Rook(board, Color.White));
