@@ -12,6 +12,7 @@ class Match
     public bool finished { get; private set; }
     private HashSet<Piece> pieces;
     private HashSet<Piece> capturedPieces;
+    public Piece vulnerableEnPassant { get; private set; }
     public bool check { get; private set; }
     public Match()
     {
@@ -21,6 +22,7 @@ class Match
         finished = false;
         pieces = new HashSet<Piece>();
         capturedPieces = new HashSet<Piece>();
+        vulnerableEnPassant = null;
         check = false;
         placePieces();
     }
@@ -115,15 +117,18 @@ class Match
         else 
             check = false;
 
-        if (isCheckMate(getEnemy))
-        {
-            finished = true;
-        }
-        else
+        if (!isCheckMate(getEnemy))
         {
             turn++;
             changePlayer();
         }
+        else
+            finished = true;
+
+        // En Passant
+        Piece piece = board.piece(destiny);
+        if (piece is Pawn && (destiny.row == origin.row - 2 || destiny.row == origin.row + 2))
+            vulnerableEnPassant = piece;
     }
 
 

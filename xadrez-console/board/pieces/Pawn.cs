@@ -1,9 +1,13 @@
-﻿namespace board.pieces;
+﻿using game;
+
+namespace board.pieces;
 
 class Pawn : Piece
 {
-    public Pawn(Board board, Color color) : base(board, color)
+    private Match match;
+    public Pawn(Board board, Color color, Match match) : base(board, color)
     {
+        this.match = match;
     }
 
     public override string ToString()
@@ -53,6 +57,18 @@ class Pawn : Piece
             {
                 boolMat[newPosition.row, newPosition.column] = true;
             }
+
+            // En Passant
+            if (position.row == 3)
+            {
+                Position left = new Position(position.row, position.column - 1);
+                if(board.validPosition(left) && enemyExists(left) && board.piece(left) == match.vulnerableEnPassant)
+                    boolMat[left.row, left.column] = true;
+
+                Position right = new Position(position.row, position.column + 1);
+                if (board.validPosition(right) && enemyExists(right) && board.piece(right) == match.vulnerableEnPassant)
+                    boolMat[right.row, right.column] = true;
+            } 
         }
         else
         {
@@ -79,8 +95,18 @@ class Pawn : Piece
             {
                 boolMat[newPosition.row, newPosition.column] = true;
             }
-        }
 
-        return boolMat;
+            // En Passant
+            if (position.row == 4)
+            {
+                Position left = new Position(position.row, position.column - 1);
+                if (board.validPosition(left) && enemyExists(left) && board.piece(left) == match.vulnerableEnPassant)
+                    boolMat[left.row, left.column] = true;
+
+                Position right = new Position(position.row, position.column + 1);
+                if (board.validPosition(right) && enemyExists(right) && board.piece(right) == match.vulnerableEnPassant)
+                    boolMat[right.row, right.column] = true;
+            }
+        }
     }
 }
