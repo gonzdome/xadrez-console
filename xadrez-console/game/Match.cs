@@ -142,6 +142,21 @@ class Match
             undoPlay(origin, destiny, capturedPiece);
             throw new BoardException("You're in check!");
         }
+        
+        Piece piece = board.piece(destiny);
+        
+        // Pawn Promotion
+        if (piece is Pawn)
+        {
+            if ((piece.color == Color.White && destiny.row == 0) || (piece.color == Color.Yellow && destiny.row == 7))
+            {
+                piece = board.removePiece(destiny);
+                pieces.Remove(piece);
+                Piece queen = new Queen(board, piece.color);
+                board.placePiece(queen, destiny);
+                pieces.Add(queen);
+            }
+        }
 
         var getEnemy = enemy(actualPlayer);
 
@@ -159,7 +174,6 @@ class Match
             finished = true;
 
         // En Passant
-        Piece piece = board.piece(destiny);
         if (piece is Pawn && (destiny.row == origin.row - 2 || destiny.row == origin.row + 2))
             vulnerableEnPassant = piece;
     }
