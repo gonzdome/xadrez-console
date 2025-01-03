@@ -74,7 +74,7 @@ class Queen : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row - 1, position.column - 1);
+            newPosition.defineValues(newPosition.row - 1, newPosition.column - 1);
         }
 
         // NE
@@ -85,7 +85,7 @@ class Queen : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row + 1, position.column + 1);
+            newPosition.defineValues(newPosition.row + 1, newPosition.column + 1);
         }
 
         // SE
@@ -96,7 +96,7 @@ class Queen : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row + 1, position.column - 1);
+            newPosition.defineValues(newPosition.row + 1, newPosition.column - 1);
         }
 
         // SO
@@ -107,7 +107,7 @@ class Queen : Piece
             if (board.piece(newPosition) != null && board.piece(newPosition).color != color)
                 break;
 
-            position.defineValues(position.row - 1, position.column + 1);
+            newPosition.defineValues(newPosition.row - 1, newPosition.column + 1);
         }
 
         return boolMat;
