@@ -58,10 +58,27 @@ class Match
             board.placePiece(rook, destinyR);
         }
 
+        // En Passant
+        if (piece is Pawn)
+        {
+            if (origin.column != destiny.column && capturedPiece == null)
+            {
+                Position positionP;
+                
+                if (piece.color == Color.White)
+                    positionP = new Position(destiny.row + 1, destiny.column);
+                else
+                    positionP = new Position(destiny.row - 1, destiny.column);
+                
+                capturedPiece = board.removePiece(positionP);
+                capturedPieces.Add(capturedPiece);
+            }
+        }
+
         return capturedPiece;
     }
-    
-    public void undoPlay (Position origin, Position destiny, Piece capturedPiece)
+
+    public void undoPlay(Position origin, Position destiny, Piece capturedPiece)
     {
         Piece piece = board.removePiece(destiny);
         piece.removeMoveQuantity();
@@ -88,6 +105,22 @@ class Match
             Piece rook = board.removePiece(destinyR);
             rook.addMoveQuantity();
             board.placePiece(rook, originR);
+        }
+
+        // En Passant
+        if (piece is Pawn)
+        {
+            if (origin.column != destiny.column && capturedPiece == vulnerableEnPassant)
+            {
+                Piece pawn = board.removePiece(destiny);
+                Position positionP;
+                if (pawn.color == Color.White)
+                    positionP = new Position(3, destiny.column);
+                else
+                    positionP = new Position(4, destiny.column);
+
+                board.placePiece(pawn, positionP);
+            }
         }
 
         board.placePiece(piece, origin);
@@ -253,14 +286,14 @@ class Match
         placeNewPiece("F", 1, new Bishop(board, Color.White));
         placeNewPiece("G", 1, new Horse(board, Color.White));
         placeNewPiece("H", 1, new Rook(board, Color.White));
-        placeNewPiece("A", 2, new Pawn(board, Color.White));
-        placeNewPiece("B", 2, new Pawn(board, Color.White));
-        placeNewPiece("C", 2, new Pawn(board, Color.White));
-        placeNewPiece("D", 2, new Pawn(board, Color.White));
-        placeNewPiece("E", 2, new Pawn(board, Color.White));
-        placeNewPiece("F", 2, new Pawn(board, Color.White));
-        placeNewPiece("G", 2, new Pawn(board, Color.White));
-        placeNewPiece("H", 2, new Pawn(board, Color.White));
+        placeNewPiece("A", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("B", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("C", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("D", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("E", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("F", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("G", 2, new Pawn(board, Color.White, this));
+        placeNewPiece("H", 2, new Pawn(board, Color.White, this));
 
         placeNewPiece("A", 8, new Rook(board, Color.Yellow));
         placeNewPiece("B", 8, new Horse(board, Color.Yellow));
@@ -270,13 +303,13 @@ class Match
         placeNewPiece("F", 8, new Bishop(board, Color.Yellow));
         placeNewPiece("G", 8, new Horse(board, Color.Yellow));
         placeNewPiece("H", 8, new Rook(board, Color.Yellow));
-        placeNewPiece("A", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("B", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("C", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("D", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("E", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("F", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("G", 7, new Pawn(board, Color.Yellow));
-        placeNewPiece("H", 7, new Pawn(board, Color.Yellow));
+        placeNewPiece("A", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("B", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("C", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("D", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("E", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("F", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("G", 7, new Pawn(board, Color.Yellow, this));
+        placeNewPiece("H", 7, new Pawn(board, Color.Yellow, this));
     }
 }

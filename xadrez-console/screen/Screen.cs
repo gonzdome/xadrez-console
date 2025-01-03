@@ -116,7 +116,7 @@ class Screen
     public static BoardPosition readBoardPosition()
     {
         string s = Console.ReadLine();
-        if (s.Length > 2 || s.Length == 0) 
+        if (s.Length != 2) 
             throw new BoardException("Invalid piece!");
 
         char column = s[0];

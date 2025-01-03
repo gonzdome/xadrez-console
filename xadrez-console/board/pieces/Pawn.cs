@@ -63,11 +63,11 @@ class Pawn : Piece
             {
                 Position left = new Position(position.row, position.column - 1);
                 if(board.validPosition(left) && enemyExists(left) && board.piece(left) == match.vulnerableEnPassant)
-                    boolMat[left.row, left.column] = true;
+                    boolMat[left.row - 1, left.column] = true;
 
                 Position right = new Position(position.row, position.column + 1);
                 if (board.validPosition(right) && enemyExists(right) && board.piece(right) == match.vulnerableEnPassant)
-                    boolMat[right.row, right.column] = true;
+                    boolMat[right.row - 1, right.column] = true;
             } 
         }
         else
@@ -101,12 +101,14 @@ class Pawn : Piece
             {
                 Position left = new Position(position.row, position.column - 1);
                 if (board.validPosition(left) && enemyExists(left) && board.piece(left) == match.vulnerableEnPassant)
-                    boolMat[left.row, left.column] = true;
+                    boolMat[left.row + 1, left.column] = true;
 
                 Position right = new Position(position.row, position.column + 1);
                 if (board.validPosition(right) && enemyExists(right) && board.piece(right) == match.vulnerableEnPassant)
-                    boolMat[right.row, right.column] = true;
+                    boolMat[right.row + 1, right.column] = true;
             }
         }
+        
+        return boolMat;
     }
 }
